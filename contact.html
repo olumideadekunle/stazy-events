@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact & Book | Stazy Events Lagos</title>
+<meta name="description" content="Get in touch with Stazy Events. Call or WhatsApp +2348026266300 / +2348031813348 or email stazyevent@gmail.com.">
+<meta name="theme-color" content="#0B132B">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{navy:'#0B132B',gold:'#D4AF37',alabaster:'#F8F9FA',slate2:'#1E293B'},fontFamily:{display:['"Playfair Display"','serif'],sans:['"Plus Jakarta Sans"','sans-serif']}}}}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="bg-alabaster text-slate2">
+<div id="site-header"></div>
+
+<section class="pt-32 pb-16 px-4 sm:px-6 bg-navy text-center">
+  <p class="text-gold uppercase tracking-[0.3em] text-xs">Get in Touch</p>
+  <h1 class="font-display text-4xl sm:text-6xl text-white mt-3">Let's Plan Your Event</h1>
+  <p class="text-white/70 mt-4 max-w-xl mx-auto">Tell us about your event and we'll get back to you quickly — usually the same day.</p>
+</section>
+
+<section class="py-16 px-4 sm:px-6">
+  <div class="max-w-7xl mx-auto grid lg:grid-cols-5 gap-10">
+    <!-- Contact cards -->
+    <div class="lg:col-span-2 space-y-5" id="cards"></div>
+
+    <!-- Form -->
+    <form id="book" novalidate class="lg:col-span-3 bg-white rounded-2xl shadow-sm p-6 sm:p-10 scroll-mt-24">
+      <h2 class="font-display text-3xl text-navy">Book a Consultation</h2>
+      <div class="gold-line mt-4 mb-8"></div>
+      <div class="grid sm:grid-cols-2 gap-5">
+        <label class="block"><span class="text-sm font-semibold">Full Name *</span>
+          <input name="name" required class="mt-2 w-full border border-slate-300 rounded-lg px-4 py-3 focus:outline-none focus:border-gold"></label>
+        <label class="block"><span class="text-sm font-semibold">Email *</span>
+          <input name="email" type="email" required class="mt-2 w-full border border-slate-300 rounded-lg px-4 py-3 focus:outline-none focus:border-gold"></label>
+        <label class="block"><span class="text-sm font-semibold">Phone / WhatsApp *</span>
+          <input name="phone" type="tel" required placeholder="+234..." class="mt-2 w-full border border-slate-300 rounded-lg px-4 py-3 focus:outline-none focus:border-gold"></label>
+        <label class="block"><span class="text-sm font-semibold">Event Type *</span>
+          <select name="type" required class="mt-2 w-full border border-slate-300 rounded-lg px-4 py-3 bg-white focus:outline-none focus:border-gold">
+            <option value="">Select…</option><option>Wedding</option><option>Birthday / Party</option><option>Surprise / Proposal</option>
+            <option>Special Effects</option><option>Rentals Only</option><option>Corporate / Conference</option><option>Other</option>
+          </select></label>
+        <label class="block"><span class="text-sm font-semibold">Event Date</span>
+          <input name="date" type="date" class="mt-2 w-full border border-slate-300 rounded-lg px-4 py-3 focus:outline-none focus:border-gold"></label>
+        <label class="block"><span class="text-sm font-semibold">Venue / Location</span>
+          <input name="venue" class="mt-2 w-full border border-slate-300 rounded-lg px-4 py-3 focus:outline-none focus:border-gold"></label>
+        <label class="block sm:col-span-2"><span class="text-sm font-semibold">Tell us about your event</span>
+          <textarea name="brief" rows="4" placeholder="Guest count, theme, colours, budget…" class="mt-2 w-full border border-slate-300 rounded-lg px-4 py-3 focus:outline-none focus:border-gold"></textarea></label>
+      </div>
+      <p id="err" class="text-red-600 text-sm mt-4 hidden"></p>
+      <div class="flex flex-col sm:flex-row gap-4 mt-8">
+        <button type="submit" data-via="whatsapp" class="flex-1 bg-[#25D366] text-white font-semibold py-4 rounded-full hover:opacity-90"><i class="fa-brands fa-whatsapp mr-2"></i>Send via WhatsApp</button>
+        <button type="submit" data-via="email" class="flex-1 bg-navy text-white font-semibold py-4 rounded-full hover:bg-gold hover:text-navy transition"><i class="fa-solid fa-envelope mr-2"></i>Send via Email</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Confirmation modal -->
+<div id="modal" class="fixed inset-0 z-[60] bg-navy/80 hidden items-center justify-center p-4">
+  <div class="bg-white rounded-2xl p-8 max-w-md text-center">
+    <div class="w-16 h-16 mx-auto rounded-full bg-gold/20 text-gold text-3xl flex items-center justify-center"><i class="fa-solid fa-check"></i></div>
+    <h3 class="font-display text-2xl text-navy mt-4">Thank you!</h3>
+    <p class="text-slate2/70 mt-2">Your enquiry is ready — just press <b>send</b> in the app that opened. We'll respond shortly.</p>
+    <button onclick="modal.classList.add('hidden');modal.classList.remove('flex')" class="mt-6 bg-navy text-white px-8 py-3 rounded-full">Close</button>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="assets/site.js"></script>
+<script>
+const card = (icon, title, body) => `<div class="bg-white rounded-2xl p-6 shadow-sm flex gap-4 items-start">
+  <div class="w-12 h-12 shrink-0 rounded-full bg-gold/15 text-gold flex items-center justify-center text-xl"><i class="${icon}"></i></div>
+  <div><p class="font-semibold text-navy">${title}</p><div class="text-sm text-slate2/75 mt-1 space-y-1">${body}</div></div></div>`;
+cards.innerHTML =
+  card("fa-solid fa-phone", "Call Us", STAZY.phones.map(p => `<a class="block hover:text-gold" href="tel:${p}">${p}</a>`).join("")) +
+  card("fa-solid fa-envelope", "Email Us", STAZY.emails.map(e => `<a class="block hover:text-gold break-all" href="mailto:${e}">${e}</a>`).join("")) +
+  card("fa-solid fa-location-dot", "Location", STAZY.location + "<br>Available across Nigeria") +
+  `<a href="https://wa.me/${STAZY.whatsapp}" target="_blank" rel="noopener" class="flex items-center justify-center gap-3 bg-[#25D366] text-white font-semibold py-4 rounded-2xl hover:opacity-90"><i class="fa-brands fa-whatsapp text-2xl"></i> Chat with us on WhatsApp</a>`;
+
+let via = "whatsapp";
+book.querySelectorAll("button[data-via]").forEach(b => b.onclick = () => via = b.dataset.via);
+book.onsubmit = e => {
+  e.preventDefault();
+  const d = Object.fromEntries(new FormData(book));
+  const problems = [];
+  if (!d.name.trim()) problems.push("your name");
+  if (!/^\S+@\S+\.\S+$/.test(d.email)) problems.push("a valid email");
+  if (d.phone.replace(/\D/g, "").length < 10) problems.push("a valid phone/WhatsApp number");
+  if (!d.type) problems.push("the event type");
+  if (problems.length) { err.textContent = "Please enter " + problems.join(", ") + "."; err.classList.remove("hidden"); return; }
+  err.classList.add("hidden");
+
+  const msg = `New Event Enquiry – Stazy Events\n\nName: ${d.name}\nEmail: ${d.email}\nPhone/WhatsApp: ${d.phone}\nEvent Type: ${d.type}\nDate: ${d.date || "-"}\nVenue: ${d.venue || "-"}\n\nBrief:\n${d.brief || "-"}`;
+  // FUTURE AUTOMATION: post `d` to a webhook here (e.g. Formspree, Make.com, Zapier, WhatsApp Cloud API) before/instead of opening the apps.
+  if (via === "whatsapp") window.open(`https://wa.me/${STAZY.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank");
+  else location.href = `mailto:${STAZY.emails.join(",")}?subject=${encodeURIComponent("Event Enquiry – " + d.type)}&body=${encodeURIComponent(msg)}`;
+  modal.classList.remove("hidden"); modal.classList.add("flex");
+  book.reset();
+};
+</script>
+</body>
+</html>

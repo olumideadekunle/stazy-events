@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Work | Stazy Events Gallery</title>
+<meta name="description" content="See real weddings, birthdays, surprises, corporate events and installations decorated by Stazy Events in Lagos, Nigeria.">
+<meta name="theme-color" content="#0B132B">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{navy:'#0B132B',gold:'#D4AF37',alabaster:'#F8F9FA',slate2:'#1E293B'},fontFamily:{display:['"Playfair Display"','serif'],sans:['"Plus Jakarta Sans"','sans-serif']}}}}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="bg-alabaster text-slate2">
+<div id="site-header"></div>
+
+<section class="pt-32 pb-12 px-4 sm:px-6 bg-navy text-center">
+  <p class="text-gold uppercase tracking-[0.3em] text-xs">Portfolio</p>
+  <h1 class="font-display text-4xl sm:text-6xl text-white mt-3">Our Work</h1>
+  <p class="text-white/70 mt-4 max-w-xl mx-auto">Real events, styled by our team. Tap any photo to view it larger.</p>
+  <div id="filters" class="flex flex-wrap justify-center gap-3 mt-10"></div>
+</section>
+
+<section class="py-16 px-4 sm:px-6">
+  <div id="gallery" class="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</section>
+
+<!-- Lightbox -->
+<div id="lightbox" class="fixed inset-0 z-[60] bg-navy/95 hidden items-center justify-center p-4" onclick="this.classList.add('hidden');this.classList.remove('flex')">
+  <figure class="max-w-5xl w-full">
+    <img id="lbImg" class="w-full max-h-[80vh] object-contain rounded-lg" alt="">
+    <figcaption id="lbCap" class="text-white text-center mt-4 font-display text-xl"></figcaption>
+  </figure>
+</div>
+
+<div id="site-footer"></div>
+<script src="assets/site.js"></script>
+<script>
+/* ===== ADD YOUR REAL PHOTOS HERE =====
+   1. Drop the photo into the images/ folder (e.g. images/wedding-ikoyi.jpg)
+   2. Add a line below: { img: "images/wedding-ikoyi.jpg", cat: "Weddings", title: "...", desc: "..." }
+   Categories: Weddings, Birthdays & Surprises, Corporate, Rentals & Effects
+   Items using Unsplash links are stand-ins — replace them with your own photos. */
+const projects = [
+  { img: "images/ballroom-setup.jpg", cat: "Weddings", title: "Grand Ballroom Reception", desc: "Gold chiavari seating, damask linens, numbered tables and full banquet layout." },
+  { img: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80", cat: "Weddings", title: "Floral Wedding Aisle", desc: "Luxury floral styling, aisle décor and ceremony backdrop." },
+  { img: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1200&q=80", cat: "Birthdays & Surprises", title: "Themed Birthday Setup", desc: "Balloon art, dessert table and custom photo backdrop." },
+  { img: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=1200&q=80", cat: "Birthdays & Surprises", title: "Romantic Surprise", desc: "Candle-lit room styling with roses and soft lighting." },
+  { img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&q=80", cat: "Corporate", title: "Corporate Conference", desc: "Stage design, AV coordination and delegate seating." },
+  { img: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200&q=80", cat: "Rentals & Effects", title: "Special Effects Night", desc: "Cold sparklers, lighting and low-fog grand entrance." }
+];
+
+const cats = ["All", ...new Set(projects.map(p => p.cat))];
+const filters = document.getElementById("filters"), gallery = document.getElementById("gallery");
+
+function render(cat) {
+  filters.innerHTML = cats.map(c => `<button data-c="${c}" class="px-5 py-2 rounded-full text-sm transition ${c === cat ? "bg-gold text-navy font-semibold" : "border border-white/30 text-white/80 hover:border-gold"}">${c}</button>`).join("");
+  gallery.innerHTML = projects.filter(p => cat === "All" || p.cat === cat).map(p => `
+    <article class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm cursor-pointer group" data-img="${p.img}" data-title="${p.title}">
+      <div class="aspect-[4/3] overflow-hidden"><img src="${p.img}" alt="${p.title}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-700"></div>
+      <div class="p-6">
+        <p class="text-gold text-xs uppercase tracking-widest">${p.cat}</p>
+        <h3 class="font-display text-xl text-navy mt-2">${p.title}</h3>
+        <p class="text-sm text-slate2/70 mt-2">${p.desc}</p>
+      </div>
+    </article>`).join("");
+}
+filters.onclick = e => e.target.dataset.c && render(e.target.dataset.c);
+gallery.onclick = e => {
+  const card = e.target.closest("article"); if (!card) return;
+  lbImg.src = card.dataset.img; lbImg.alt = lbCap.textContent = card.dataset.title;
+  lightbox.classList.remove("hidden"); lightbox.classList.add("flex");
+};
+render("All");
+</script>
+</body>
+</html>
